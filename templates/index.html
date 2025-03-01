@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>75 Hard Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>75 Hard Challenge Tracker 🔥</h1>
+    
+    <div class="container">
+        {% for day in days %}
+        <div class="day-card {% if day['Daily completion score'] >= 0.99 %}completed-day{% endif %}">
+            <div class="day-header">
+                <h3>{{ day.Date.strftime('%b %d') }} - Day {{ loop.index }}</h3>
+                <div class="streak">🔥 {{ day.Streak }} Day Streak</div>
+            </div>
+
+            <form action="/update/{{ day.Date.strftime('%Y-%m-%d') }}" method="post">
+                <div class="task-group">
+                    <h4>🌅 Morning Routine</h4>
+                    {% for task in ['Wake up at 6:00 AM', 'Drink 500ml water'] %}
+                    <label class="task">
+                        <input type="checkbox" name="{{ task }}" {% if day[task] %}checked{% endif %}>
+                        {{ task }}
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="task-group collapsible">
+                    <h4>🧘 Mental Wellness</h4>
+                    {% for task in ['Cold Shower', 'Meditation', 'Journaling', 'Reading', 'Skill Learning'] %}
+                    <label class="task">
+                        <input type="checkbox" name="{{ task }}" {% if day[task] %}checked{% endif %}>
+                        {{ task }}
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="task-group collapsible">
+                    <h4>💪 Fitness</h4>
+                    {% for task in ['Stretching Mobility', 'Strength Training', 'Cardio Workout', 'Reached 10K+ steps'] %}
+                    <label class="task">
+                        <input type="checkbox" name="{{ task }}" {% if day[task] %}checked{% endif %}>
+                        {{ task }}
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="task-group collapsible">
+                    <h4>🥗 Diet & Recovery</h4>
+                    {% for task in ['Clean Eating', 'No Sugar', 'No Alcohol', '4L Water Intake', 'Healthy Breakfast', 'Sleep by 10:00 PM'] %}
+                    <label class="task">
+                        <input type="checkbox" name="{{ task }}" {% if day[task] %}checked{% endif %}>
+                        {{ task }}
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="progress-bars">
+                    <div class="progress">
+                        <label>Diet Compliance</label>
+                        <div class="bar-container">
+                            <div class="bar" style="width: {{ day['Diet compliance'] * 100 }}%"></div>
+                            <span>{{ "%.0f"|format(day['Diet compliance'] * 100) }}%</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <label>Fitness Completion</label>
+                        <div class="bar-container">
+                            <div class="bar" style="width: {{ day['Fitness completion'] * 100 }}%"></div>
+                            <span>{{ "%.0f"|format(day['Fitness completion'] * 100) }}%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress">
+                        <label>Mental Wellness</label>
+                        <div class="bar-container">
+                            <div class="bar" style="width: {{ day['Mental Wellness'] * 100 }}%"></div>
+                            <span>{{ "%.0f"|format(day['Mental Wellness'] * 100) }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="save-btn">💾 Save Day {{ loop.index }}</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.querySelectorAll('.collapsible h4').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('expanded');
+                
+                // Force browser reflow for smooth animation
+                void section.offsetHeight; 
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+:root {
+    --primary: #2c3e50;
+    --success: #27ae60;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui;
+    background: #f8f9fa;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.day-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.day-card.completed-day {
+    border-left: 5px solid var(--success);
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.streak {
+    background: var(--warning);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.task-group {
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.task-group.collapsible {
+    cursor: pointer;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin: 5px 0;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.task input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.progress-bars {
+    margin-top: 20px;
+}
+
+.bar-container {
+    height: 25px;
+    background: #eee;
+    border-radius: 12px;
+    position: relative;
+    margin: 10px 0;
+}
+
+.bar {
+    height: 100%;
+    border-radius: 12px;
+    background: var(--primary);
+    transition: width 0.5s ease;
+}
+
+.bar-container span {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.save-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.save-btn:hover {
+    opacity: 0.9;
+}
+
+/* Add these rules at the end of your existing CSS */
+/* Collapsible Animation */
+.collapsible {
+    max-height: 40px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.collapsible.expanded {
+    max-height: 500px;
+}
+
+/* Progress Bar Additions */
+.progress {
+    margin: 15px 0;
+}
+.progress label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* Custom progress bar colors */
+.progress:nth-child(1) .bar { background: var(--success); } /* Diet */
+.progress:nth-child(2) .bar { background: var(--warning); } /* Fitness */
+.progress:nth-child(3) .bar { background: var(--danger); }  /* Mental */
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .day-card {
+        margin: 10px;
+    }
+}
+
+/* Checkbox Styling */
+.task input[type="checkbox"]:checked + span {
+    color: var(--success);
+    font-weight: bold;
+}
+
+/* Hover Effects */
+.task-group:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
